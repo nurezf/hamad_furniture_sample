@@ -82,7 +82,7 @@ out
 .nuxt
 dist
 
-src/assets/
+
 
 # Gatsby files
 .cache/
