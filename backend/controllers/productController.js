@@ -2,13 +2,24 @@
 
 import cloudinary from "../config/cloudinary.js";
 import productModel from "../models/productModel.js";
+import userModel from "../models/userModel.js";
 
 // Add product
 // Add product
 const addProduct = async (req, res) => {
   try {
-    const { name, description, category, subCategory, colors, quantity } =
-      req.body;
+    const {
+      name,
+      description,
+      category,
+      subCategory,
+      colors,
+      quantity,
+      admin,
+    } = req.body;
+    const adminEmail = req.admin.email;
+
+    const adminId = await userModel.findOne({ email: adminEmail });
 
     if (
       !name ||
@@ -69,6 +80,7 @@ const addProduct = async (req, res) => {
       quantity: parseInt(quantity),
       image: imagesUrl,
       date: new Date(),
+      createdBy: adminId._id,
     };
 
     const product = new productModel(productData);
